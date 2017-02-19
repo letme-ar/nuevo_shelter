@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+
+Route::get('confirmation/{token}',['uses' => 'Auth\RegisterController@getConfirmation','as' => 'confirmation']);
+
+Route::get('reset-password/{token}',['uses' => 'Auth\ResetPasswordController@reiniciarPassword','as' => 'reset-password']);
