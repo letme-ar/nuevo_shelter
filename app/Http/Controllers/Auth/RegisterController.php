@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Shelter\Repositories\RepoNegocio;
+use App\Shelter\Repositories\RepoSala;
+use App\Shelter\Repositories\RepoSalasXNegocio;
+use App\Shelter\Repositories\RepoUser;
+use App\Shelter\Repositories\RepoUsersXNegocio;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -70,21 +75,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'nombre' => $data['nombre'],
-            'apellido' => $data['apellido'],
-            'username' => $data['username'],
-            'nombre_negocio' => $data['nombre_negocio'],
-            'web' => $data['web'],
-            'direccion' => $data['direccion'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = $this->createUser($data);
 
-        $user->type_user_id = 2;
-        $user->user_creador_id = $user->id;
-        $user->registration_token = str_random(20);
-        $user->save();
+        $this->createNegocioAndSala($user,$data['nombre_negocio']);
 
         $url = route('confirmation',['token' => $user->registration_token]);
 //        $url = route('confirmation',['token' => "123145646fds56fd56sdf565f64ds56fds564sf566f5ds"]);
@@ -122,6 +115,43 @@ class RegisterController extends Controller
 
         return redirect(route('login'))->with('alert','Correo confirmado, ya puedes iniciar sesión');
 
+    }
+
+    private function createNegocioAndSala($user,$nombre_negocio)
+    {
+        $repoNegocio = new RepoNegocio();
+        $repoUsersXNegocio = new RepoUsersXNegocio();
+        $repoSala = new RepoSala();
+        $repoSalasXnegocio = new RepoSalasXNegocio();
+
+        $negocio = $repoNegocio->getModel()->firstOrCreate(['descripcion' => $nombre_negocio,'user_creador_id' => $user->id]);
+        $repoUsersXNegocio->getModel()->firstOrCreate(['user_creador_id' => $user->id,'negocio_id' => $negocio->id]);
+        $sala = $repoSala->getModel()->firstOrCreate(['descripcion' => 'Sala 1','user_creador_id' => $user->id]);
+        $repoSalasXnegocio->getModel()->firstOrCreate(['negocio_id' => $negocio->id,'sala_id' => $sala->id]);
+    }
+
+    /**
+     * @param array $data
+     * @return static
+     */
+    protected function createUser(array $data)
+    {
+        $repoUser = new RepoUser();
+        $user = $repoUser->getModel()->create([
+            'nombre' => $data['nombre'],
+            'apellido' => $data['apellido'],
+            'username' => $data['username'],
+            'web' => $data['web'],
+            'direccion' => $data['direccion'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        $user->type_user_id = 2;
+        $user->user_creador_id = $user->id;
+        $user->registration_token = str_random(20);
+        $user->save();
+        return $user;
     }
 
 

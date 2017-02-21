@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Shelter\Entities\Negocio;
+use App\Shelter\Repositories\RepoNegocio;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

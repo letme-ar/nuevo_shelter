@@ -15,7 +15,7 @@ class CreateTableUsersxnegocios extends Migration
     {
         Schema::create('usersxnegocios', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_creador_id')->unsigned();
             $table->integer('negocio_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
