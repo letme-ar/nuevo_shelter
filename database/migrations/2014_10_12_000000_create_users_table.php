@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('nombre_negocio');
+            $table->tinyInteger('user_creador_id')->unsiged()->nullable();
             $table->string('web');
             $table->string('direccion');
             $table->string('email')->unique()->nullable();

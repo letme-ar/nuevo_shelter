@@ -82,6 +82,7 @@ class RegisterController extends Controller
         ]);
 
         $user->type_user_id = 2;
+        $user->user_creador_id = $user->id;
         $user->registration_token = str_random(20);
         $user->save();
 
@@ -107,9 +108,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        $user = event(new Registered($user = $this->create($request->all())));
-
-//        $this->guard()->login($user);
+        event(new Registered($user = $this->create($request->all())));
 
         return redirect(route('login'))->with('alert','Por favor, confirma tu email');
     }
@@ -121,7 +120,7 @@ class RegisterController extends Controller
         $user->registration_token = null;
         $user->save();
 
-        return redirect(route('login'))->with('alert','Email confirmado, ya puedes iniciar sesión!');
+        return redirect(route('login'))->with('alert','Correo confirmado, ya puedes iniciar sesión');
 
     }
 
