@@ -44,7 +44,7 @@
                     <!-- Left Side Of Navbar -->
                     @if (!Auth::guest())
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Negocios</a></li>
+                        <li><a href="#">Grupos</a></li>
                         <li><a href="#">Productos</a></li>
                         <li><a href="#">Servicios</a></li>
                         <li><a href="#">Calendario</a></li>
