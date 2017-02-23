@@ -18,5 +18,9 @@ abstract class Repo {
         return $this->getModel()->find($id);
     }
 
+    public function all()
+    {
+        return $this->getModel()->all();
+    }
 
 } 

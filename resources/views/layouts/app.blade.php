@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    {!! Html::script('js/jquery.js') !!}
+    {!! Html::script('js/vue.js') !!}
+    {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::script('js/HoldOn.js') !!}
+    {!! Html::script('js/jquery.mask.js') !!}
+    {!! Html::style('css/HoldOn.css', array('media' => 'screen')) !!}
+    {!! Html::style('css/font-awesome.css', array('media' => 'screen')) !!}
 
     <!-- Scripts -->
     <script>
@@ -19,6 +26,8 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
+
 </head>
 <body>
     <div id="app">
@@ -44,7 +53,7 @@
                     <!-- Left Side Of Navbar -->
                     @if (!Auth::guest())
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Grupos</a></li>
+                        <li><a href="{{ route('grupos.index') }}">Grupos</a></li>
                         <li><a href="#">Productos</a></li>
                         <li><a href="#">Servicios</a></li>
                         <li><a href="#">Calendario</a></li>
@@ -87,10 +96,13 @@
             </div>
         </nav>
 
+    </div>
+    <div class="container" id="main">
         @yield('content')
     </div>
-
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+
+
 </body>
+@yield('scripts')
 </html>

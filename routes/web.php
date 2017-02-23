@@ -16,10 +16,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-
 Route::get('confirmation/{token}',['uses' => 'Auth\RegisterController@getConfirmation','as' => 'confirmation']);
 
 Route::get('reset-password/{token}',['uses' => 'Auth\ResetPasswordController@reiniciarPassword','as' => 'reset-password']);
+
+Route::group(['middleware' => 'auth'],function(){
+
+    Route::get('/home', 'HomeController@index');
+
+    Route::post('create-grupo',['uses' => 'GruposController@createGrupo','as' => 'grupos.create-grupo']);
+    Route::get('find-grupo',['uses' => 'GruposController@findGrupo','as' => 'grupos.find-grupo']);
+    Route::resource('grupos','GruposController');
+
+    Route::get('estilos.all',['uses' => 'EstilosController@all','as' => 'estilos.all']);
+
+});
+
