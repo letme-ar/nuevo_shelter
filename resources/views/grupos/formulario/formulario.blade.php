@@ -56,6 +56,7 @@
 
     @include('grupos.formulario.social')
 
+    
     <div class="col-md-12 alert-danger" v-if="errors.length > 0">
         <li v-for="error in errors" class="has-error">
             @{{ error.descripcion }}
