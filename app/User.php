@@ -34,4 +34,9 @@ class User extends Authenticatable
 //        $this->notify(new MyResetPassword($token));
 //    }
 
+    public function usersxnegocio()
+    {
+        return $this->hasOne('App\Shelter\Entities\UsersXNegocio','user_creador_id','id');
+    }
+
 }

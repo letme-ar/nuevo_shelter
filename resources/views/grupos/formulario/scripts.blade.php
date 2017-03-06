@@ -11,41 +11,60 @@
                 estilo_id: '',
                 integrantes: '',
                 web: '',
-                contactos: []
+                contactos: [],
+                facebook: '',
+                twitter: '',
+                instagram: '',
+                youtube: '',
+                vimeo: '',
+                bandcamp: '',
+                spotify: '',
+                otro: ''
             },
             estilos: [],
             titulo: "{!! $titulo !!}",
             nombre_contacto: '',
             telefono: '',
             add_contact: true,
+            errors: [],
 //            saving: false,
 //            errors: [],
             token: ''
 
         },
         methods:{
-            createCuenta: function(){
-//                var cuenta = JSON.stringify(this.cuenta);
-//                cargando('sk-folding-cube','Guardando');
-//                this.saving = true;
-//                vm.errors = [];
-//                $.ajax({
-//                    url: "{{ Route('grupos.store') }}",
-//                    method: 'POST',
-//                    data: "cuenta="+cuenta+"&_token="+this.token,
-//                    dataType: 'json',
-//                    success: function (data) {
-//                        location.href = "{{ Route('grupos.index') }}";
-//                    },
-//                    error: function (respuesta) {
-//                        var mensaje = "";
-//                        vm.saving = false;
-//                        $.each(respuesta.responseJSON.errores,function(code,obj){
-//                            vm.errors.push({ 'descripcion':  obj });
-//                        });
-//                        HoldOn.close();
-//                    }
-//                });
+            createGrupo: function(){
+                $(".form-control").removeClass("marcarError");
+                cargando("sk-folding-cube",'Guardando...');
+                var grupo = this.grupo;
+                grupo._token = this.token;
+                vm.errors = [];
+                $.ajax({
+                    url: "{{ Route('grupos.store') }}",
+                    method: 'POST',
+                    data: grupo,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        location.href = "{{ Route('master',1) }}";
+                    },
+                    error: function (jqXHR) {
+                        /*var mensaje = "";
+                        vm.saving = false;
+                        $.each(respuesta.responseJSON.errores,function(code,obj){
+                            vm.errors.push({ 'descripcion':  obj });
+                        });
+                        HoldOn.close();*/
+                        vm.errors = [];
+
+                        $.each(jqXHR.responseJSON,function(code,obj){
+//                            console.log(obj);
+                            $("#"+code).addClass("marcarError");
+                            vm.errors.push({ 'descripcion':  obj });
+                            HoldOn.close();
+                        });
+                    }
+                });
 
             },
             permitirGuardar: function()

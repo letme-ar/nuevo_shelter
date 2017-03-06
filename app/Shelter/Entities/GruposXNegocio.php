@@ -16,4 +16,11 @@ class GruposXNegocio extends Model {
     protected $table = 'gruposxnegocios';
     protected $fillable = ['grupo_id','negocio_id'];
 
+    private function getModel()
+    {
+        return new GruposXNegocio();
+    }
+
+
+
 } 

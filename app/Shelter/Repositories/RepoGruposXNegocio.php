@@ -17,4 +17,14 @@ class RepoGruposXNegocio extends Repo {
     {
         return new GruposXNegocio();
     }
+
+    public function saveNew($grupo_id,$negocio_id)
+    {
+        $grupoxnegocio = $this->getModel()->create([
+            'grupo_id' => $grupo_id,
+            'negocio_id' => $negocio_id
+        ]);
+
+        return $grupoxnegocio->id;
+    }
 }

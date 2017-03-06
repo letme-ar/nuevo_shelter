@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Shelter\Repositories\RepoGrupo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
 class GruposController extends Controller
@@ -58,7 +59,10 @@ class GruposController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,$this->getValidaciones(),$this->getMessagesError());
+        $data = $request->all();
+        $this->repo->createGrupoNegocioAndContactos($data);
+        return \Response()->json(['success' => true],200);
     }
 
     /**
@@ -105,4 +109,23 @@ class GruposController extends Controller
     {
         //
     }
+
+    private function getValidaciones()
+    {
+        return  [
+            'nombre' => 'required|unique:grupos|max:255',
+            'estilo_id' => 'required',
+            'contactos' => 'required'
+        ];
+    }
+
+    private function getMessagesError()
+    {
+        return [
+            'nombre.unique' => 'Un grupo con ese nombre ya ha sido registrado',
+            'estilo_id.required' => 'El campo estilo es obligatorio',
+            'contactos.required' => 'Debe ingresar al menos un contacto'
+        ];
+    }
+
 }

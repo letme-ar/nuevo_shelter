@@ -10,4 +10,16 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    var $redirigir = [
+        1 => 'grupos.index'
+    ];
+
+
+    public function redirect($id)
+    {
+        return redirect(route($this->redirigir[$id]))->with('alert','Guardado correctamente');
+    }
+
+
 }

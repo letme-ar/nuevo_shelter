@@ -15,4 +15,7 @@ class UsersXNegocio extends Model {
 
     protected $table = 'usersxnegocios';
     protected $fillable = ['user_creador_id','negocio_id'];
+
+
+
 } 

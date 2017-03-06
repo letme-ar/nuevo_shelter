@@ -17,4 +17,20 @@ class RepoGrupo extends Repo{
     {
         return new Grupo();
     }
+
+    public function createGrupoNegocioAndContactos($data)
+    {
+        $grupo_id = $this->saveGrupo($data);
+        $grupoxnegocio_id = $this->getRepoGruposXNegocios()->saveNew($grupo_id,auth()->user()->usersxnegocio->negocio_id);
+        $this->getRepoGruposXNegociosXContacto()->saveNew($grupoxnegocio_id,$data['contactos']);
+    }
+
+    public function saveGrupo($data)
+    {
+        $grupo = $this->getModel();
+        $data['user_creador_id'] = auth()->user()->id;
+        $grupo->fill($data);
+        $grupo->save();
+        return $grupo->id;
+    }
 }

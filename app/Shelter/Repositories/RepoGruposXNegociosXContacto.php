@@ -17,4 +17,16 @@ class RepoGruposXNegociosXContacto extends Repo {
     {
         return new GruposXNegociosXContacto();
     }
+
+    public function saveNew($grupoxnegocio_id, $contactos)
+    {
+        foreach($contactos as $contacto)
+        {
+            $this->getModel()->create([
+                'grupoxnegocio_id' => $grupoxnegocio_id,
+                'nombre' => $contacto['nombre'],
+                'telefono' => $contacto['telefono']
+            ]);
+        }
+    }
 }

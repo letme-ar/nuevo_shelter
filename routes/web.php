@@ -30,5 +30,6 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('estilos.all',['uses' => 'EstilosController@all','as' => 'estilos.all']);
 
+    Route::get('master/{id}',['uses' => 'Controller@redirect','as' => 'master']);
 });
 

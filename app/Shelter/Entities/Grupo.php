@@ -14,6 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 class Grupo extends Model {
 
     protected $table = 'grupos';
-    protected $fillable = ['nombre','estilo_id','integrantes','web','facebook','twitter','instasgram','youtube','vimeo','bandcamp','spotify','user_creador_id'];
+    protected $fillable = ['nombre','estilo_id','integrantes','web','facebook','twitter','instagram','youtube','vimeo','bandcamp','spotify','user_creador_id'];
 
 } 
