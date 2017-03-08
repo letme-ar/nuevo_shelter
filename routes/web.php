@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/home', 'HomeController@index');
 
     Route::post('create-grupo',['uses' => 'GruposController@createGrupo','as' => 'grupos.create-grupo']);
+    Route::get('buscar',['uses' => 'GruposController@buscar','as' => 'grupos.buscar']);
     Route::get('find-grupo',['uses' => 'GruposController@findGrupo','as' => 'grupos.find-grupo']);
     Route::resource('grupos','GruposController');
 

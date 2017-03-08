@@ -33,4 +33,10 @@ class RepoGrupo extends Repo{
         $grupo->save();
         return $grupo->id;
     }
+
+    public function findAndPaginate(array $datos)
+    {
+        $nombre = $datos['nombre'];
+        return $this->getModel()->where('nombre','like','%'.$nombre.'%')->with(['estilo'])->paginate(env('APP_CANT_PAGINATE',10));
+    }
 }

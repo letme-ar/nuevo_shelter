@@ -41,6 +41,11 @@ class GruposController extends Controller
 
     }
 
+    public function buscar()
+    {
+        return $this->repo->findAndPaginate(Input::all());
+    }
+
     /**
      * Show the form for creating a new resource.
      *
