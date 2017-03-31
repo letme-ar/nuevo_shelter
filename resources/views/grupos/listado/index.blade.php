@@ -48,9 +48,12 @@
                     $.ajax({
                         url: url,
                         method: 'GET',
-                        dataType: 'json',
+                        dataType: "html",
                         assync: true,
                         data: grupo,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
                         success: function (data) {
                             vm.pagina_actual = 'Página '+ data.current_page + ' de '+ data.last_page + '. Cantidad de registros: ' + data.total;
                             vm.lista = data.data;

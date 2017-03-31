@@ -64,7 +64,7 @@
         </li>
     </div>
 
-    <div class="col-md-12" style="">
+    <div class="col-md-12">
         {!! Form::button("Guardar", ['type' => 'submit', 'class' => 'btn btn-primary pull-right', '@click' => 'createGrupo()']) !!}
         <a href="{!! route('grupos.index') !!}" class="btn btn-success pull-right" style="margin-right: 10px">Cancelar</a>
     </div>

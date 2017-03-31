@@ -33,16 +33,26 @@
             update: function(){
                 $(".form-control").removeClass("marcarError");
                 cargando("sk-folding-cube",'Guardando...');
-                var datos = this.datos;
-                datos._token = this.token;
+//                var nombre = this.datos.nombre;
+//                var apellido = this.datos.apellido;
+//                var email = this.datos.email;
+//                var foto = $("#file").get(0).files;
+                var formData = new FormData(document.getElementById("frmPerfil"));
+                console.log(formData);
+//                datos._token = this.token;
+                var token = this.token;
                 vm.errors = [];
                 $.ajax({
+                    type: "Post",
                     url: "{{ Route('account.update') }}",
-                    method: 'POST',
-                    data: datos,
-                    dataType: 'json',
+                    data: formData,
+                    assync: true,
+                    dataType: "html",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (data) {
-                        location.href = "{{ Route('master',2) }}";
+{{--                        location.href = "{{ Route('master',2) }}";--}}
                     },
                     error: function (jqXHR) {
                         vm.errors = [];
@@ -109,7 +119,7 @@
 
     @include('components.message-confirmation')
 
-    {!! Form::open(array('route' => 'account.update','type' => 'POST')) !!}
+    {!! Form::model($user,array('route' => 'account.update','enctype' => 'multipart/form-data','id' => 'frmPerfil')) !!}
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}" v-model="token">
 
@@ -123,7 +133,7 @@
         {!! Field::text('email',$user->email,['v-model' => 'datos.email']) !!}
 
         <label for="file">Foto de perfil</label>
-        <input type="file" id="file" />
+        <input type="file" id="file" name="foto" v-model="datos.foto" />
     </div>
 
     <div class="row">
@@ -135,7 +145,9 @@
     </div>
 
 
-    {!! Form::button('Actualizar',['type' => 'submit','class' => 'btn btn-primary pull-right', '@click.prevent' => 'update()']) !!}
+    <div class="col-md-12">
+        {!! Form::button('Actualizar',['type' => 'submit','class' => 'btn btn-primary pull-right', '@click.prevent' => 'update()']) !!}
+    </div>
 
     {!! Form::close() !!}
 

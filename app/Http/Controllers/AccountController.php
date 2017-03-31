@@ -32,7 +32,8 @@ class AccountController extends Controller{
 
     public function update(Request $request)
     {
-//        $data = Input::all();
+        $data = Input::all();
+        dd($request->all());
         $this->validator($request->all())->validate();
         $this->repoUser->update(auth()->user()->id,$request->all());
         return \Response()->json(['success' => true],200);
