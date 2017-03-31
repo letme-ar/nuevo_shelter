@@ -15,8 +15,8 @@ class CreateTableGruposxnegocios extends Migration
     {
         Schema::create('gruposxnegocios', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('grupo_id')->unsiged();
-            $table->tinyInteger('negocio_id')->unsiged();
+            $table->integer('grupo_id')->unsiged();
+            $table->integer('negocio_id')->unsiged();
             $table->timestamps();
             $table->softDeletes();
 
