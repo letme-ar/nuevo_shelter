@@ -77,13 +77,13 @@
                             vm.prev = data.prev_page_url
                             vm.last = "{{route('grupos.buscar')}}" + "?page="+data.last_page;
                             HoldOn.close();
+                            vm.busqueda = false;
                         },
                         error: function (respuesta) {
 
                             HoldOn.close();
                         }
                     });
-                    vm.busqueda = false;
 //                console.log(filtrar());
 
                 }

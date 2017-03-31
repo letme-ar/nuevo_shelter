@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('/home', 'HomeController@index');
 
+    Route::get('grupos.getDataGrupo',['uses' => 'GruposController@getDataGrupo','as' => 'grupos.getDataGrupo']);
+    Route::get('grupos.listImport',['uses' => 'GruposController@listImport','as' => 'grupos.listImport']);
     Route::post('create-grupo',['uses' => 'GruposController@createGrupo','as' => 'grupos.create-grupo']);
     Route::get('buscar',['uses' => 'GruposController@buscar','as' => 'grupos.buscar']);
     Route::get('find-grupo',['uses' => 'GruposController@findGrupo','as' => 'grupos.find-grupo']);

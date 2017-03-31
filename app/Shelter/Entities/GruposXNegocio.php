@@ -21,6 +21,12 @@ class GruposXNegocio extends Model {
         return new GruposXNegocio();
     }
 
+    public function gruposxnegociosxcontacto()
+    {
+        return $this->hasMany('App\Shelter\Entities\GruposXNegociosXContacto', 'grupoxnegocio_id', 'id');
+    }
+
+
 
 
 } 

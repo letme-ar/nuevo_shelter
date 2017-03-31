@@ -21,6 +21,7 @@
                 spotify: '',
                 otro: ''
             },
+            importar: false,
             estilos: [],
             titulo: "{!! $titulo !!}",
             nombre_contacto: '',
@@ -45,20 +46,11 @@
                     data: grupo,
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data);
                         location.href = "{{ Route('master',1) }}";
                     },
                     error: function (jqXHR) {
-                        /*var mensaje = "";
-                        vm.saving = false;
-                        $.each(respuesta.responseJSON.errores,function(code,obj){
-                            vm.errors.push({ 'descripcion':  obj });
-                        });
-                        HoldOn.close();*/
                         vm.errors = [];
-
                         $.each(jqXHR.responseJSON,function(code,obj){
-//                            console.log(obj);
                             $("#"+code).addClass("marcarError");
                             vm.errors.push({ 'descripcion':  obj });
                             HoldOn.close();
@@ -66,26 +58,6 @@
                     }
                 });
 
-            },
-            permitirGuardar: function()
-            {
-//                var puede_guardar = true;
-//                    console.log(vm.cuenta.nro_cuenta);
-//                    if(vm.cuenta.nro_cuenta == "")
-//                        puede_guardar = false;
-//                    if(vm.cuenta.nombre_cuenta == "")
-//                        puede_guardar = false;
-//                    if(vm.cuenta.dominio == "")
-//                        puede_guardar = false;
-//                    if(vm.cuenta.nombre_server_principal == "")
-//                        puede_guardar = false;
-//                    if(vm.cuenta.nombre_server_backup == "")
-//                        puede_guardar = false;
-
-//                if(puede_guardar)
-//                    vm.saving = false;
-//                else
-//                    vm.saving = true;
             },
             cargarEstilos: function()
             {
@@ -99,6 +71,39 @@
                         });
                     }
                 });
+            },
+            cargarDatos: function () {
+
+                cargando("sk-circle",'Cargando...');
+                $.ajax({
+                    url: "{{ Route('grupos.getDataGrupo') }}",
+                    method: 'get',
+                    dataType: 'json',
+                    data: "grupo_id={!! $grupo_id !!}",
+                    success: function (data) {
+                        vm.grupo.id = data.id;
+                        vm.grupo.nombre = data.nombre;
+                        vm.grupo.estilo_id = data.estilo_id;
+                        vm.grupo.integrantes = data.integrantes;
+                        vm.grupo.web = data.web;
+                        vm.grupo.facebook = data.facebook;
+                        vm.grupo.twitter = data.twitter;
+                        vm.grupo.instagram = data.instagram;
+                        vm.grupo.youtube = data.youtube;
+                        vm.grupo.vimeo = data.vimeo;
+                        vm.grupo.bandcamp = data.bandcamp;
+                        vm.grupo.spotify = data.spotify;
+                        vm.grupo.otro = data.otro;
+                        vm.importar = true;
+                        $.each(data.contactos,function(k,v){
+                            vm.grupo.contactos.push({'id':v.id,'nombre':v.nombre,'telefono': v.telefono});
+//                            console.log(v);
+                        });
+
+                        HoldOn.close();
+                    }
+                });
+{{--              console.log("{!! $grupo_id !!}");--}}
             },
             agregarContacto: function(nombre, telefono){
                 var id = vm.grupo.contactos.length + 1;
@@ -127,7 +132,6 @@
             deleteContact: function(contacto)
             {
                 vm.grupo.contactos.$remove(contacto);
-                console.log(vm.grupo.contactos);
             }
 
 
@@ -135,6 +139,9 @@
     });
 
     vm.cargarEstilos();
+    @if($grupo_id)
+    vm.cargarDatos();
+    @endif
 
     $(document).ready(function(){
 

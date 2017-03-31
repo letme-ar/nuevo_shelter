@@ -20,4 +20,10 @@ class Grupo extends Model {
     {
         return $this->hasOne('App\Shelter\Entities\Estilo', 'id', 'estilo_id');
     }
-} 
+
+    public function gruposxnegocio()
+    {
+        return $this->hasOne('App\Shelter\Entities\GruposXNegocio', 'grupo_id', 'id')->where('negocio_id',auth()->user()->usersxnegocio->negocio_id);
+    }
+
+}
