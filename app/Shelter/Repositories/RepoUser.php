@@ -17,4 +17,11 @@ class RepoUser extends Repo {
     {
         return new User();
     }
+
+    public function update($id,$data)
+    {
+        $user = $this->getModel()->find($id);
+        $user->fill($data);
+        $user->save();
+    }
 }

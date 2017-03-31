@@ -12,7 +12,8 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     var $redirigir = [
-        1 => 'grupos.index'
+        1 => 'grupos.index',
+        2 => 'profile'
     ];
 
 

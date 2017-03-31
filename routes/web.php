@@ -31,5 +31,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('estilos.all',['uses' => 'EstilosController@all','as' => 'estilos.all']);
 
     Route::get('master/{id}',['uses' => 'Controller@redirect','as' => 'master']);
+
+    Route::get('profile',['uses' => 'AccountController@showMyProfile','as' => 'profile']);
+    Route::post('account.update',['uses' => 'AccountController@update','as' => 'account.update']);
 });
 

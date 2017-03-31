@@ -100,7 +100,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="">Mi perfil</a></li>
+                                    <li><a href="{{ url('/profile') }}">Mi perfil</a></li>
                                     <li><a href="">Mi negocio</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
