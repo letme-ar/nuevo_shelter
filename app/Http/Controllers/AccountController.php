@@ -32,25 +32,20 @@ class AccountController extends Controller{
 
     public function update(Request $request)
     {
-        $data = Input::all();
-        dd($request->all());
-        $this->validator($request->all())->validate();
+        $this->validate($request,$this->getValidaciones(auth()->user()->id));
+
+//        $this->validator($request->all())->validate();
         $this->repoUser->update(auth()->user()->id,$request->all());
         return \Response()->json(['success' => true],200);
     }
 
-    protected function validator(array $data)
+    protected function getValidaciones($id)
     {
-//        dd($data);
-        return Validator::make($data, [
-//            'username' => 'required|max:255|unique:users',
+        return [
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
-//            'nombre_negocio' => 'required|max:255',
-//            'web' => 'url',
-            'email' => 'required|email|max:255|unique:users,email,'.$data['id'],
-//            'password' => 'required|min:6|confirmed',
-        ]);
+            'email' => 'required|email|max:255|unique:users,email,'.$id,
+        ];
     }
 
 }

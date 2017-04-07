@@ -21,6 +21,9 @@ class RepoUser extends Repo {
     public function update($id,$data)
     {
         $user = $this->getModel()->find($id);
+        if(isset($data['foto']))
+            $data['path_foto'] = $this->guardarArchivo("foto_perfil",$data['foto'],$id);
+
         $user->fill($data);
         $user->save();
     }

@@ -8,7 +8,7 @@
             -moz-border-radius: 200px 200px 200px 200px;
             -webkit-border-radius: 200px 200px 200px 200px;
             border: 0px solid #000000;
-            height: 100%;
+            height: 400px;
             width: 100%;
         }
 
@@ -38,7 +38,6 @@
 //                var email = this.datos.email;
 //                var foto = $("#file").get(0).files;
                 var formData = new FormData(document.getElementById("frmPerfil"));
-                console.log(formData);
 //                datos._token = this.token;
                 var token = this.token;
                 vm.errors = [];
@@ -47,16 +46,17 @@
                     url: "{{ Route('account.update') }}",
                     data: formData,
                     assync: true,
-                    dataType: "html",
+                    dataType: "json",
                     cache: false,
                     contentType: false,
                     processData: false,
                     success: function (data) {
-{{--                        location.href = "{{ Route('master',2) }}";--}}
+                        location.href = "{{ Route('master',2) }}";
                     },
                     error: function (jqXHR) {
                         vm.errors = [];
 
+                        console.log(jqXHR);
                         $.each(jqXHR.responseJSON,function(code,obj){
                             $("#"+code).addClass("marcarError");
                             vm.errors.push({ 'descripcion':  obj });
@@ -68,34 +68,6 @@
             }
 
         }
-    });
-
-    /*function guardar()
-    {
-        cargando("sk-folding-cube",'Guardando...');
-        var nombre = $("input:text[name=nombre]").val();
-        var apellido = $("input:text[name=apellido]").val();
-        var email = $("input:text[name=email]").val();
-        var token = $("input:hidden[name=_token]").val();
-
-        $.ajax({
-            url: "{{ Route('account.update') }}",
-            method: 'POST',
-            data: "nombre="+nombre+"&apellido="+apellido+"&email="+email+"&_token="+token,
-            dataType: 'json',
-            success: function (data) {
-                location.href = "{{ Route('master',2) }}";
-            },
-            error: function (jqXHR) {
-
-            }
-        });
-    }*/
-
-    $(document).ready(function(){
-
-
-
     });
 
 
@@ -138,12 +110,15 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="col-md-12">
-                <img id="image"  class="redondeado" />
-            </div>
+            <img id="image"  class="redondeado" src="{{ $user->path_foto }}" />
         </div>
     </div>
 
+    <div class="col-md-12 alert-danger" v-if="errors.length > 0">
+        <li v-for="error in errors" class="has-error">
+            @{{ error.descripcion }}
+        </li>
+    </div>
 
     <div class="col-md-12">
         {!! Form::button('Actualizar',['type' => 'submit','class' => 'btn btn-primary pull-right', '@click.prevent' => 'update()']) !!}
@@ -151,11 +126,6 @@
 
     {!! Form::close() !!}
 
-    <div class="col-md-12 alert-danger" v-if="errors.length > 0">
-        <li v-for="error in errors" class="has-error">
-            @{{ error.descripcion }}
-        </li>
-    </div>
 
 
 
