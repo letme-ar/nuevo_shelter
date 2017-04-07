@@ -35,6 +35,10 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('master/{id}',['uses' => 'Controller@redirect','as' => 'master']);
 
+    Route::get('negocio',['uses' => 'NegociosController@showMyNegocio','as' => 'negocio']);
+    Route::post('negocio.update',['uses' => 'NegociosController@update','as' => 'negocio.update']);
+
+
     Route::get('profile',['uses' => 'AccountController@showMyProfile','as' => 'profile']);
     Route::post('account.update',['uses' => 'AccountController@update','as' => 'account.update']);
 });

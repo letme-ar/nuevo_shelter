@@ -37,7 +37,7 @@
                 buscar: function(url){
 //                    var filtro = filtrar();
                     if(url == undefined)
-                        var url = "{{route('grupos.buscar')}}" + "?" + "page=1";
+                        var url = "{{route('grupos.buscar')}}" + "?" + "page=1&nombre="+this.grupo.nombre;
 
                     var grupo = this.grupo;
                     grupo._token = this.token;
@@ -48,7 +48,7 @@
                     $.ajax({
                         url: url,
                         method: 'GET',
-                        dataType: "html",
+                        dataType: "json",
                         assync: true,
                         data: grupo,
                         cache: false,
@@ -59,6 +59,7 @@
                             vm.lista = data.data;
                             vm.first = "{{route('grupos.buscar')}}" + "?page=1";
                             vm.next = data.next_page_url;
+                            console.log(vm.lista[0].gruposxnegocio.gruposxnegociosxcontacto[0]);
 
 //                            $("#pagina_actual").text('Página '+ data.current_page + ' de '+ data.last_page + '. Cantidad de registros: ' + data.total);
 
@@ -87,8 +88,6 @@
                             HoldOn.close();
                         }
                     });
-//                console.log(filtrar());
-
                 }
             }
         });
@@ -139,7 +138,7 @@
         <tr v-for="registro in lista">
             <td>@{{ registro.nombre }}</td>
             <td>@{{ registro.estilo.descripcion }}</td>
-            <td>@{{ registro.contacto }}</td>
+            <td>@{{ registro.gruposxnegocio.gruposxnegociosxcontacto[0].nombre }}</td>
             <td><a title='Editar' href="{{route('grupos.index')}}/@{{ registro.id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a></td>
         </tr>
         </tbody>

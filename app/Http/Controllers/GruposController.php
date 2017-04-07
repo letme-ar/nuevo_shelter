@@ -6,6 +6,7 @@ use App\Shelter\Repositories\RepoGrupo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 
 class GruposController extends Controller
@@ -66,6 +67,7 @@ class GruposController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -109,7 +111,6 @@ class GruposController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -120,7 +121,11 @@ class GruposController extends Controller
      */
     public function edit($id)
     {
-        //
+        $grupo = $this->repo->find($id);
+        $grupo_id = $grupo->id;
+
+        $titulo = 'Agregar';
+        return view("grupos.formulario.formulario",compact('grupo','titulo','grupo_id'));
     }
 
     /**

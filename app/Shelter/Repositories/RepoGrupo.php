@@ -38,13 +38,18 @@ class RepoGrupo extends Repo{
 
     public function findAndPaginate(array $datos)
     {
-        $nombre = $datos['nombre'];
-        return $this->getModel()
+//        dd($datos);
+        $model = $this->getModel()
             ->join('gruposxnegocios','grupo_id',"=",'grupos.id')
-            ->where('nombre','like','%'.$nombre.'%')
-            ->where('gruposxnegocios.negocio_id',auth()->user()->usersxnegocio->negocio_id)
-            ->with(['estilo'])
-            ->paginate(env('APP_CANT_PAGINATE',10));
+            ->where('gruposxnegocios.negocio_id',auth()->user()->usersxnegocio->negocio_id);
+
+        if(isset($datos['nombre']))
+            $model = $model->where('nombre','like','%'.$datos['nombre'].'%');
+
+        $model = $model->with(['estilo','gruposxnegocio'])->paginate(env('APP_CANT_PAGINATE',10));
+
+        return $model;
+
     }
 
     public function getListImport($nombre)

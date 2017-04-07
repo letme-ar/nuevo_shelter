@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Negocio extends Model {
 
     protected $table = 'negocios';
-    protected $fillable = ['descripcion','user_creador_id'];
+    protected $fillable = ['descripcion','mail','path_foto','web','facebook','twitter','instagram','direccion','user_creador_id'];
 
 
 

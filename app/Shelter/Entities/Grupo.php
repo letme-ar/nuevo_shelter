@@ -23,7 +23,7 @@ class Grupo extends Model {
 
     public function gruposxnegocio()
     {
-        return $this->hasOne('App\Shelter\Entities\GruposXNegocio', 'grupo_id', 'id')->where('negocio_id',auth()->user()->usersxnegocio->negocio_id);
+        return $this->hasOne('App\Shelter\Entities\GruposXNegocio', 'grupo_id', 'id')->where('negocio_id',auth()->user()->usersxnegocio->negocio_id)->with('gruposxnegociosxcontacto');
     }
 
 }
