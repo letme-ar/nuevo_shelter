@@ -40,6 +40,11 @@ abstract class Repo {
         return new RepoGruposXNegociosXContacto();
     }
 
+    protected function getRepoNegociosXFoto()
+    {
+        return new RepoNegociosXFoto();
+    }
+
     public function guardarArchivo($carpeta,$archivo,$id)
     {
         if ($archivo)

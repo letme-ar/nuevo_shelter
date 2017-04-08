@@ -14,7 +14,7 @@ class AddFotoToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('path_foto')->after('type_user_id');
+            $table->string('path_foto')->nullable()->after('type_user_id');
         });
     }
 

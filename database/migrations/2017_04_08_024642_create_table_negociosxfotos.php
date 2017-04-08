@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableNegociosxtelefonos extends Migration
+class CreateTableNegociosxfotos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTableNegociosxtelefonos extends Migration
      */
     public function up()
     {
-        Schema::create('negociosxtelefonos', function (Blueprint $table) {
+        Schema::create('negociosxfotos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('negocio_id')->unsiged();
-            $table->string('telefono',30);
+            $table->string('path_foto');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
@@ -30,6 +29,6 @@ class CreateTableNegociosxtelefonos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('negociosxtelefonos');
+        Schema::dropIfExists('negociosxfotos');
     }
 }

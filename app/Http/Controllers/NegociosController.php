@@ -18,6 +18,7 @@ class NegociosController extends Controller
     public function showMyNegocio()
     {
         $negocio = auth()->user()->usersxnegocio->negocio;
+//        dd($negocio->negociosxfotos->toArray());
         return view("negocios.my_negocio",compact('negocio'));
     }
 
@@ -25,9 +26,8 @@ class NegociosController extends Controller
     {
         $this->validate($request,$this->getValidaciones());
 
-//        $this->validator($request->all())->validate();
-//        $this->repoUser->update(auth()->user()->id,$request->all());
-//        return \Response()->json(['success' => true],200);
+        $this->repoNegocio->update(auth()->user()->id,$request->all());
+        return \Response()->json(['success' => true],200);
     }
 
     protected function getValidaciones()

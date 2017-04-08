@@ -17,4 +17,29 @@ class RepoNegocio extends Repo {
     {
         return new Negocio();
     }
+
+    public function update($id, $data)
+    {
+        $negocio = $this->getModel()->find($id);
+
+        $negocio->fill($data);
+        $negocio->save();
+
+        $this->saveFiles($id, $data);
+
+    }
+
+    public function saveFiles($id, $data)
+    {
+//        dd($data);
+        if (isset($data['fotos'])) {
+            $total = count($data['fotos']);
+            for ($i = 0; $i < $total; $i++) {
+                $path_foto = $this->guardarArchivo("fotos_negocios", $data['fotos'][$i], $id);
+                $this->getRepoNegociosXFoto()->saveNew($id, $path_foto);
+            }
+        }
+    }
+
+
 }

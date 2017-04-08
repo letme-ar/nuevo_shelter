@@ -14,13 +14,12 @@ class AddFieldsTableNegocios extends Migration
     public function up()
     {
         Schema::table('negocios', function (Blueprint $table) {
-            $table->string('mail')->after('descripcion');
-            $table->string('path_foto')->after('mail');
-            $table->string('web')->after('path_foto');
-            $table->string('facebook')->after('web');
-            $table->string('twitter')->after('facebook');
-            $table->string('instagram')->after('twitter');
-            $table->string('direccion')->after('instagram');
+            $table->string('mail')->nullable()->after('descripcion');
+            $table->string('web')->nullable()->after('mail');
+            $table->string('facebook')->nullable()->after('web');
+            $table->string('twitter')->nullable()->after('facebook');
+            $table->string('instagram')->nullable()->after('twitter');
+            $table->string('direccion')->nullable()->after('instagram');
         });
     }
 

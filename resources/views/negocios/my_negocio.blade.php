@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('scripts')
+    {!! Html::script('js/photo-gallery.js') !!}
+
     <style>
 
         .redondeado{
@@ -11,6 +13,48 @@
             height: 400px;
             width: 100%;
         }
+
+        .modal-body {
+            padding:5px !important;
+        }
+        .modal-content {
+            border-radius:0;
+        }
+        .modal-dialog img {
+            text-align:center;
+            margin:0 auto;
+        }
+
+        .controls2{
+            width:50px;
+            display:block;
+            font-size:11px;
+            padding-top:8px;
+            font-weight:bold;
+        }
+
+        .next {
+            float:right;
+            text-align:right;
+        }
+        /*override modal for demo only*/
+        .modal-dialog {
+            max-width:500px;
+            padding-top: 90px;
+        }
+        @media screen and (min-width: 768px){
+            .modal-dialog {
+                width:500px;
+                padding-top: 90px;
+            }
+        }
+        @media screen and (max-width:1500px){
+            #ads {
+                display:none;
+            }
+        }
+
+
 
     </style>
     <script>
@@ -55,7 +99,8 @@
                         contentType: false,
                         processData: false,
                         success: function (data) {
-                            location.href = "{{ Route('master',2) }}";
+                            location.href = "{{ Route('master',3) }}";
+                            HoldOn.close();
                         },
                         error: function (jqXHR) {
                             vm.errors = [];
@@ -76,15 +121,25 @@
 
 
     </script>
-    <script>
-        document.getElementById("file").onchange = function () {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById("image").src = e.target.result;
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
+
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
     </script>
+
+
+
 
 @endsection
 
@@ -113,21 +168,42 @@
     </div>
 
     <div class="col-md-6">
-        {!! Field::text('facebook',$negocio->web,['v-model' => 'negocio.facebook']) !!}
+        {!! Field::text('facebook',$negocio->faceook,['v-model' => 'negocio.facebook']) !!}
     </div>
 
     <div class="col-md-6">
-        {!! Field::text('twitter',$negocio->web,['v-model' => 'negocio.twitter']) !!}
+        {!! Field::text('twitter',$negocio->twitter,['v-model' => 'negocio.twitter']) !!}
     </div>
 
     <div class="col-md-6">
-        {!! Field::text('instagram',$negocio->web,['v-model' => 'negocio.instagram']) !!}
+        {!! Field::text('instagram',$negocio->instagram,['v-model' => 'negocio.instagram']) !!}
     </div>
 
-    <div class="col-md-6">
-        {!! Field::text('direccion',$negocio->web,['v-model' => 'negocio.direccion']) !!}
+   <div class="col-md-6">
+        {!! Field::text('direccion',$negocio->direccion,['v-model' => 'negocio.direccion']) !!}
     </div>
 
+    <div class="col-md-12">
+        <label>Cargar fotos del negocio</label>
+        <input name="fotos[]" type="file" multiple="multiple" class="form-control" />
+    </div>
+
+    <ul class="row">
+        @foreach($negocio->negociosxfotos as $fotos)
+            <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                <img class="img-responsive" src="{{ $fotos->path_foto }}">
+            </li>
+        @endforeach
+    </ul>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
     <div class="col-md-12 alert-danger" v-if="errors.length > 0">
@@ -141,6 +217,7 @@
     </div>
 
     {!! Form::close() !!}
+
 
 
 
