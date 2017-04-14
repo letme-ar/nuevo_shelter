@@ -19,8 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->tinyInteger('user_creador_id')->unsiged()->nullable();
-            $table->string('web');
-            $table->string('direccion');
             $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->string('registration_token')->nullable();

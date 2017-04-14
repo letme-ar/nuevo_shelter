@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('login', ['as' => 'login', 'uses' => 'LoginController@getView']);
 Auth::routes();
 Route::get('confirmation/{token}',['uses' => 'Auth\RegisterController@getConfirmation','as' => 'confirmation']);
 
@@ -35,11 +36,14 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('master/{id}',['uses' => 'Controller@redirect','as' => 'master']);
 
+    Route::get('usersxnegocio',['uses' => 'NegociosController@usersxnegocio','as' => 'usersxnegocio']);
     Route::get('negocio',['uses' => 'NegociosController@showMyNegocio','as' => 'negocio']);
     Route::post('negocio.update',['uses' => 'NegociosController@update','as' => 'negocio.update']);
 
 
     Route::get('profile',['uses' => 'AccountController@showMyProfile','as' => 'profile']);
     Route::post('account.update',['uses' => 'AccountController@update','as' => 'account.update']);
+
+    Route::resource('users','UsersController');
 });
 

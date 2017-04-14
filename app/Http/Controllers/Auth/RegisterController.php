@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Shelter\Mail\ShelterMailer;
 use App\Shelter\Repositories\RepoNegocio;
 use App\Shelter\Repositories\RepoSala;
 use App\Shelter\Repositories\RepoSalasXNegocio;
@@ -79,14 +80,13 @@ class RegisterController extends Controller
 
         $this->createNegocioAndSala($user,$data['nombre_negocio']);
 
-        $url = route('confirmation',['token' => $user->registration_token]);
+
 //        $url = route('confirmation',['token' => "123145646fds56fd56sdf565f64ds56fds564sf566f5ds"]);
 
 
 //        dd($url);
-        Mail::send('emails/registration',compact('user','url'),function($m) use ($user){
-            $m->to($user->email,$user->nombre)->subject('Activa tu cuenta');
-        });
+        $mail = new ShelterMailer();
+        $mail->sendMailWelcome($user);
 
         return $user;
    }
@@ -103,7 +103,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return redirect(route('login'))->with('alert','Por favor, confirma tu email');
+        return redirect(url('/login'))->with('alert','Por favor, confirma tu email');
     }
 
 
@@ -113,7 +113,7 @@ class RegisterController extends Controller
         $user->registration_token = null;
         $user->save();
 
-        return redirect(route('login'))->with('alert','Correo confirmado, ya puedes iniciar sesión');
+        return redirect(url('/login'))->with('alert','Correo confirmado, ya puedes iniciar sesión');
 
     }
 
@@ -141,8 +141,6 @@ class RegisterController extends Controller
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],
             'username' => $data['username'],
-            'web' => $data['web'],
-            'direccion' => $data['direccion'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

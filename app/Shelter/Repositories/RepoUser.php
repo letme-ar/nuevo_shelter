@@ -27,4 +27,19 @@ class RepoUser extends Repo {
         $user->fill($data);
         $user->save();
     }
+
+    public function createUser($data)
+    {
+        $user = $this->getModel()->firstOrNew(['id' => $data['id']]);
+//        if($data['id'] == "")
+//            $data['user_creador_id'] = auth()->user()->id;
+
+        $data['password'] = bcrypt($data['password']);
+        $user->fill($data);
+        $user->user_creador_id = auth()->user()->id;
+        $user->registration_token = str_random(20);
+//        dd($user);
+        $user->save();
+        return $user;
+    }
 }

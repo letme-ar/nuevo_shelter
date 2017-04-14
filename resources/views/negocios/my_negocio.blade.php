@@ -146,7 +146,11 @@
 
 @section('content')
 
-    <h1>Mi negocio</h1>
+    <h1>Mi negocio
+        @if($type_user_id == 1 || $type_user_id == 2)
+            <a href="{!! route('usersxnegocio')!!}"><button class="btn btn-success pull-right" >Administración de usuarios</button></a>
+        @endif
+    </h1>
 
     @include('components.message-confirmation')
 
