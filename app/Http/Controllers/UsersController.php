@@ -39,10 +39,10 @@ class UsersController extends Controller
         return view("users.formulario");
     }
 
-    protected function getRules()
+    protected function getRules($id)
     {
         return [
-            'username' => 'required|max:255|unique:users',
+            'username' => 'required|max:255|unique:users,username,'.$id,
             'nombre' => 'required|max:255',
             'apellido' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -98,7 +98,10 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->repoUser->find($id);
+        $data_form = ['route' => ['users.update',$id],'method' => 'PATCH','class' => 'form-horizontal','role' => 'form'];
+//        $data_form = ['route' => ['users.update'], 'method' => 'POST','enctype' => 'multipart/form-data','id' => 'frmIngreso'];
+        return view("users.formulario",compact('user','data_form'));
     }
 
     /**
@@ -110,7 +113,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,$this->getRules($id));
+        dd("hola");
+//        dd($request->all());
     }
 
     /**

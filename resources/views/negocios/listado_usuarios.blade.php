@@ -31,7 +31,7 @@
                 <td>{{ $usuario->nombre }}</td>
                 <td>{{ $usuario->apellido }}</td>
                 <td>{{ $usuario->email }}</td>
-                <td><a title='Editar' href="{{route('users.index')}}/{{ $usuario->id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a></td>
+                <td><a title='Editar' href="{{route('users.index')}}/{{ $usuario->user_id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a></td>
             </tr>
         @endforeach
         </tbody>
