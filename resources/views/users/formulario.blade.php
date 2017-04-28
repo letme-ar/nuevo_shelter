@@ -1,17 +1,67 @@
 @extends('layouts.app')
 
+@section('scripts')
+
+    <script>
+        $(document).ready(function(){
+
+            $("#frmUsers").on("submit", function(e){
+
+                e.preventDefault();
+                var formData = new FormData(document.getElementById("frmUsers"));
+                var destino = "{{ Route('users.store') }}";
+                cargando("sk-folding-cube",'Guardando...');
+                $.ajax({
+                    type: "Post",
+                    url: destino,
+                    data: formData,
+                    assync: true,
+                    dataType: "html",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(){
+                        location.href = "{{ Route('master',4) }}";
+                        HoldOn.close();
+                    },
+                    error: function(result) {
+                        var mensaje = "";
+                        $.each(JSON.parse(result.responseText),function(code,obj){
+                            mensaje += "<li>"+obj[0]+"</li><br>";
+                        });
+                        $("#contenido-modal-").html(mensaje);
+                        $("#confirmacion-").modal(function(){show:true});
+                        HoldOn.close();
+                    }
+
+
+                });
+
+
+            });
+        });
+    </script>
+
+@endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Agregar usuario al negocio</div>
+                    <div class="panel-heading">
+                        @if(!isset($user))
+                            Agregar usuario al negocio
+                        @else
+                            Editar usuario del negocio
+                        @endif
+                    </div>
                     <div class="panel-body">
-{{--                        {!! Form::model($user,$data_form, ['role' => 'form']) !!}--}}
-                        {!! Form::model(isset($user) ? $user:null ,$data_form, ['role' => 'form']) !!}
+{{--                        {!! Form::model(isset($user) ? $user:null ,$data_form, ['role' => 'form']) !!}--}}
+                        {!! Form::model(isset($user) ? $user:null ,['role' => 'form','class' => 'form-horizontal','route' => 'users.store','id' => 'frmUsers']) !!}
+                        {{--<form class="form-horizontal" role="form" method="POST" action="{{ Route('users.store') }}">--}}
 
                         {{ csrf_field() }}
-                            <input type="hidden" name="id" value="{{ $user->id }}" />
+                            {{ Form::hidden('id',null,[]) }}
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="username" class="col-md-4 control-label">Nombre de usuario</label>
@@ -85,7 +135,7 @@
 
                                     <div class="col-md-6">
                                         {{--<input id="password" type="password" class="form-control" name="password" required>--}}
-                                        {{ Form::password('username',['class' => 'form-control','required','autofocus']) }}
+                                        {{ Form::password('password',['class' => 'form-control','required','autofocus']) }}
 
                                         @if ($errors->has('password'))
                                             <span class="help-block">
@@ -101,7 +151,7 @@
 
                                     <div class="col-md-6">
                                         {{--<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>--}}
-                                        {{ Form::password('password-confirmation',['class' => 'form-control','required']) }}
+                                        {{ Form::password('password_confirmation',['class' => 'form-control','required']) }}
                                     </div>
                                 </div>
                             @endif
@@ -118,4 +168,6 @@
             </div>
         </div>
     </div>
+
+    @include('components.modal',['id' => '','accion' => 'Guardar'])
 @endsection

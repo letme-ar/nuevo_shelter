@@ -41,6 +41,36 @@
                 HoldOn.close();
             },300000);
         }
+
+        function peticionAjax(destino,datos)
+        {
+            redireccionar = redireccionar || 0;
+            cargando("sk-folding-cube",'Guardando...');
+            $.ajax({
+                type: "Post",
+                url: destino,
+                data: datos,
+                assync: true,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta){
+                    location.href = "{{ Route('master',4) }}";
+                },
+                error: function(result) {
+                    var mensaje = "";
+                    $.each(JSON.parse(result.responseText),function(code,obj){
+                        mensaje += "<li>"+obj[0]+"</li><br>";
+                    });
+                    $("#contenido-modal-").html(mensaje);
+                    $("#confirmacion-").modal(function(){show:true});
+                    HoldOn.close();
+                }
+
+
+            });
+        }
     </script>
 
     <style>

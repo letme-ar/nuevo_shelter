@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('profile',['uses' => 'AccountController@showMyProfile','as' => 'profile']);
     Route::post('account.update',['uses' => 'AccountController@update','as' => 'account.update']);
 
+    Route::post("users/activar",array('as' => 'users.activar','uses'  => 'UsersController@activar'));
+    Route::post("users/desactivar",array('as' => 'users.desactivar','uses'  => 'UsersController@desactivar'));
     Route::resource('users','UsersController');
 });
 

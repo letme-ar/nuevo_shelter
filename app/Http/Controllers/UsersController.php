@@ -41,13 +41,26 @@ class UsersController extends Controller
 
     protected function getRules($id)
     {
-        return [
-            'username' => 'required|max:255|unique:users,username,'.$id,
-            'nombre' => 'required|max:255',
-            'apellido' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ];
+        if($id)
+        {
+            return [
+                'username' => 'required|max:255|unique:users,username,'.$id.",id",
+                'nombre' => 'required|max:255',
+                'apellido' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users,email,'.$id.",id"
+            ];
+        }
+        else
+        {
+            return [
+                'username' => 'required|max:255|unique:users,username,'.$id.",id",
+                'nombre' => 'required|max:255',
+                'apellido' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users,email,'.$id.",id",
+                'password' => 'required|min:6|confirmed'
+                ];
+
+        }
     }
     /**
      * Store a newly created resource in storage.
@@ -57,18 +70,12 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,$this->getRules());
-        /*if($request->get('id'))
+        $this->validate($request,$this->getRules($request->get('id')));
+        if($request->get('id'))
         {
-            $isUpdate = $this->repo->getImportOrUpdate($request->get('id'),auth()->user()->usersxnegocio->negocio_id);
-            if($isUpdate)
-                $this->repo->updateGrupoNegocioAndContactos($data);
-            else
-            {
-                $this->repo->createGrupoNegocioAndContactos($data);
-            }
+            $this->repoUser->createUser($request->toArray());
         }
-        else*/
+        else
         {
             $user = $this->repoUser->createUser($request->toArray());
             $this->repoUsersXNegocio->getModel()->firstOrCreate(['user_creador_id' => $user->id,'negocio_id' => auth()->user()->usersxnegocio->negocio_id]);
@@ -99,33 +106,22 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = $this->repoUser->find($id);
-        $data_form = ['route' => ['users.update',$id],'method' => 'PATCH','class' => 'form-horizontal','role' => 'form'];
+//        $data_form = ['route' => ['users.update',$id],'method' => 'PATCH','class' => 'form-horizontal','role' => 'form'];
 //        $data_form = ['route' => ['users.update'], 'method' => 'POST','enctype' => 'multipart/form-data','id' => 'frmIngreso'];
-        return view("users.formulario",compact('user','data_form'));
+        return view("users.formulario",compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function desactivar(Request $request)
     {
-        $this->validate($request,$this->getRules($id));
-        dd("hola");
-//        dd($request->all());
+        $user = $this->repoUser->find($request->get('id'));
+        $user->delete();
+        return \Response()->json(['success' => true],200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function activar(Request $request)
     {
-        //
+        $this->repoUser->activar($request->get('id'));
+        return \Response()->json(['success' => true],200);
     }
 }

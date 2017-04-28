@@ -14,7 +14,8 @@ class Controller extends BaseController
     var $redirigir = [
         1 => 'grupos.index',
         2 => 'profile',
-        3 => 'negocio'
+        3 => 'negocio',
+        4 => 'usersxnegocio'
     ];
 
 
