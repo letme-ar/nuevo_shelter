@@ -15,7 +15,7 @@ class CreateTableGruposxnegociosxcontactos extends Migration
     {
         Schema::create('gruposxnegociosxcontactos', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('grupoxnegocio_id')->unsiged();
+            $table->integer('grupoxnegocio_id')->unsiged();
             $table->string('nombre',50);
             $table->string('telefono',30);
             $table->timestamps();

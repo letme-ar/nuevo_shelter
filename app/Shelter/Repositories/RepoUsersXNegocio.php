@@ -17,4 +17,12 @@ class RepoUsersXNegocio extends Repo{
     {
         return new UsersXNegocio();
     }
+
+    public function getUsersByNegocio($negocio_id)
+    {
+        return $this->getModel()->join('users','users.id','=','usersxnegocios.user_creador_id')
+            ->where('negocio_id',$negocio_id)
+            ->select(['users.id as user_id','users.username','users.nombre','users.apellido','users.email','users.deleted_at'])
+            ->get();
+    }
 }

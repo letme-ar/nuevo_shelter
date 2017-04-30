@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 //use App\Notifications\MyResetPassword;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nombre','apellido','username','web','direccion', 'email','user_creador_id', 'password','type_user_id','registration_token'
+        'nombre','apellido','username','web','direccion', 'email','user_creador_id', 'password','type_user_id','path_foto','registration_token','deleted_at'
     ];
 
     /**
@@ -33,5 +35,12 @@ class User extends Authenticatable
 //    {
 //        $this->notify(new MyResetPassword($token));
 //    }
+
+    public function usersxnegocio()
+    {
+        return $this->hasOne('App\Shelter\Entities\UsersXNegocio','user_creador_id','id');
+    }
+
+
 
 }

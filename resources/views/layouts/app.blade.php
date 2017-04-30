@@ -11,12 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
     {!! Html::script('js/jquery.js') !!}
     {!! Html::script('js/vue.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
     {!! Html::script('js/HoldOn.js') !!}
     {!! Html::script('js/jquery.mask.js') !!}
+    {!! Html::style('css/app.css', array('media' => 'screen')) !!}
     {!! Html::style('css/HoldOn.css', array('media' => 'screen')) !!}
     {!! Html::style('css/font-awesome.css', array('media' => 'screen')) !!}
 
@@ -25,7 +25,62 @@
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+
+
+        /*
+         Possible types: "sk-cube-grid", "sk-bounce", "sk-folding-cube","sk-circle","sk-dot","sk-falding-circle"
+         "sk-cube-grid", "custom"
+         */
+        function cargando(type,message){
+            HoldOn.open({
+                theme: type,
+                message:"<h4>"+message+"</h4>"
+            });
+
+            setTimeout(function(){
+                HoldOn.close();
+            },300000);
+        }
+
+        function peticionAjax(destino,datos)
+        {
+            redireccionar = redireccionar || 0;
+            cargando("sk-folding-cube",'Guardando...');
+            $.ajax({
+                type: "Post",
+                url: destino,
+                data: datos,
+                assync: true,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta){
+                    location.href = "{{ Route('master',4) }}";
+                },
+                error: function(result) {
+                    var mensaje = "";
+                    $.each(JSON.parse(result.responseText),function(code,obj){
+                        mensaje += "<li>"+obj[0]+"</li><br>";
+                    });
+                    $("#contenido-modal-").html(mensaje);
+                    $("#confirmacion-").modal(function(){show:true});
+                    HoldOn.close();
+                }
+
+
+            });
+        }
     </script>
+
+    <style>
+
+        .marcarError{
+            background-color: red;
+            color: white;
+        }
+
+    </style>
 
 
 </head>
@@ -75,8 +130,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="">Mi perfil</a></li>
-                                    <li><a href="">Mi negocio</a></li>
+                                    <li><a href="{{ url('/profile') }}">Mi perfil</a></li>
+                                    <li><a href="{{ url('/negocio') }}">Mi negocio</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

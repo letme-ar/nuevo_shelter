@@ -77,6 +77,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect(route('login'))->with('alert','Sesión cerrada correctamente');
+        return redirect(url('/login'))->with('alert','Sesión cerrada correctamente');
     }
 }
