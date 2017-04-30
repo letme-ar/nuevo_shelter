@@ -70,6 +70,6 @@
     </div>
 
 
-    <pre> @{{ $data | json }} </pre>
+    {{--<pre> @{{ $data | json }} </pre>--}}
 @endsection
 
