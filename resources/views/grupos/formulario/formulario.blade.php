@@ -8,6 +8,7 @@
     <h1>@{{ titulo }} un grupo</h1>
     <input type="hidden" name="_token" value="{{ csrf_token() }}" v-model="token">
     <input type="hidden" name="id" value="" v-model="id">
+    <input type="hidden" name="grupoxnegocio_id" value="" v-model="grupoxnegocio_id">
     <div class="col-md-6">
         {!! Form::label('nombre','Nombre') !!}
         {!! Form::text('nombre',null,['class' => 'form-control','v-model' => 'grupo.nombre','required','v-bind:disabled' => 'importar == true']) !!}
@@ -70,6 +71,6 @@
     </div>
 
 
-    {{--<pre> @{{ $data | json }} </pre>--}}
+    <pre> @{{ $data | json }} </pre>
 @endsection
 

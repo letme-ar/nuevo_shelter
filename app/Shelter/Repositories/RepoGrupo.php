@@ -79,7 +79,20 @@ class RepoGrupo extends Repo{
 
     public function updateGrupoNegocioAndContactos($data)
     {
-        $grupo_id = $this->saveGrupo($data);
+        $this->saveGrupo($data);
+        $ids_gruposxnegociosxcontactos = $this->getRepoGruposXNegociosXContacto()->getIds($data['grupoxnegocio_id']);
+        foreach($data['contactos'] as $contacto){
+            if(isset($contacto['id_provisorio']))
+            {
+                $contacto = (object)$contacto;
+                $this->getRepoGruposXNegociosXContacto()->saveNew($data['grupoxnegocio_id'],$contacto);
+            }
+            else
+            {
+                unset($ids_gruposxnegociosxcontactos[$contacto['id']]);
+            }
+        }
+        $this->getRepoGruposXNegociosXContacto()->removeContacto($ids_gruposxnegociosxcontactos);
     }
 
     public function getImportOrUpdate($grupo_id,$negocio_id)

@@ -10,11 +10,13 @@ namespace App\Shelter\Entities;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Grupo extends Model {
 
     protected $table = 'grupos';
     protected $fillable = ['nombre','estilo_id','integrantes','web','facebook','twitter','instagram','youtube','vimeo','bandcamp','spotify','user_creador_id'];
+    use SoftDeletes;
 
     public function estilo()
     {
