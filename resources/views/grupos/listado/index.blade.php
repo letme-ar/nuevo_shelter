@@ -59,7 +59,6 @@
                             vm.lista = data.data;
                             vm.first = "{{route('grupos.buscar')}}" + "?page=1";
                             vm.next = data.next_page_url;
-                            console.log(vm.lista[0].gruposxnegocio.gruposxnegociosxcontacto[0]);
 
 //                            $("#pagina_actual").text('Página '+ data.current_page + ' de '+ data.last_page + '. Cantidad de registros: ' + data.total);
 
@@ -137,8 +136,8 @@
         <tbody id="table">
         <tr v-for="registro in lista">
             <td>@{{ registro.nombre }}</td>
-            <td>@{{ registro.estilo.descripcion }}</td>
-            <td>@{{ registro.gruposxnegocio.gruposxnegociosxcontacto[0].nombre }}</td>
+            <td>@{{ registro.estilo }}</td>
+            <td>@{{ registro.gruposxnegocio.gruposxnegociosxcontacto[0].nombre }} - @{{ registro.gruposxnegocio.gruposxnegociosxcontacto[0].telefono }}</td>
             <td><a title='Editar' href="{{route('grupos.index')}}/@{{ registro.id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a></td>
         </tr>
         </tbody>

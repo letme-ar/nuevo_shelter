@@ -7,6 +7,7 @@
         data:{
             grupo : {
                 id: '',
+                grupoxnegocio_id: '',
                 nombre: '',
                 estilo_id: '',
                 integrantes: '',
@@ -82,6 +83,7 @@
                     data: "grupo_id={!! $grupo_id !!}",
                     success: function (data) {
                         vm.grupo.id = data.id;
+                        vm.grupo.grupoxnegocio_id = data.gruposxnegocio.id;
                         vm.grupo.nombre = data.nombre;
                         vm.grupo.estilo_id = data.estilo_id;
                         vm.grupo.integrantes = data.integrantes;

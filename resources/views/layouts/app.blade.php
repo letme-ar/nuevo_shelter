@@ -11,12 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
     {!! Html::script('js/jquery.js') !!}
     {!! Html::script('js/vue.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
     {!! Html::script('js/HoldOn.js') !!}
     {!! Html::script('js/jquery.mask.js') !!}
+    {!! Html::style('css/app.css', array('media' => 'screen')) !!}
     {!! Html::style('css/HoldOn.css', array('media' => 'screen')) !!}
     {!! Html::style('css/font-awesome.css', array('media' => 'screen')) !!}
 
