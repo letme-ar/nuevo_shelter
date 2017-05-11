@@ -10,6 +10,7 @@ namespace App\Shelter\Repositories;
 
 
 use App\Shelter\Entities\NegocioXFoto;
+use App\Shelter\Entities\SalaXFoto;
 
 class RepoNegociosXFoto extends Repo
 {

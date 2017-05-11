@@ -45,6 +45,11 @@ abstract class Repo {
         return new RepoNegociosXFoto();
     }
 
+    protected function getRepoSalasXFoto()
+    {
+        return new RepoSalaXFotos();
+    }
+
     public function guardarArchivo($carpeta,$archivo,$id)
     {
         if ($archivo)

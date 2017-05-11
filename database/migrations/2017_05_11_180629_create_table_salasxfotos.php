@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableSalasxnegocios extends Migration
+class CreateTableSalasxfotos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTableSalasxnegocios extends Migration
      */
     public function up()
     {
-        Schema::create('salasxnegocios', function (Blueprint $table) {
+        Schema::create('salasxfotos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('negocio_id')->unsigned();
             $table->integer('sala_id')->unsigned();
-            $table->integer('principal');
+            $table->string('path_foto');
             $table->timestamps();
             $table->softDeletes();
         });

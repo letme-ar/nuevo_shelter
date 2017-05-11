@@ -19,6 +19,7 @@
     {!! Html::style('css/app.css', array('media' => 'screen')) !!}
     {!! Html::style('css/HoldOn.css', array('media' => 'screen')) !!}
     {!! Html::style('css/font-awesome.css', array('media' => 'screen')) !!}
+    {!! Html::style('css/style.css', array('media' => 'screen')) !!}
 
     <!-- Scripts -->
     <script>
@@ -112,7 +113,7 @@
                         <li><a href="#">Productos</a></li>
                         <li><a href="#">Servicios</a></li>
                         <li><a href="#">Calendario</a></li>
-                        <li><a href="#">Salas</a></li>
+                        <li><a href="{{ url('salas') }}">Salas</a></li>
                         <li><a href="#">Reportes</a></li>
                     </ul>
                     @endif

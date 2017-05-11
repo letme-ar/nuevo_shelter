@@ -18,6 +18,8 @@ class CreateTableSalas extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->integer('user_creador_id')->unsigned();
+            $table->integer('negocio_id')->unsigned();
+            $table->integer('principal');
             $table->timestamps();
             $table->softDeletes();
         });

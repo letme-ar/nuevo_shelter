@@ -22,6 +22,7 @@ class RepoNegocio extends Repo {
     {
         $negocio = $this->getModel()->find($id);
 
+//        dd($negocio);
         $negocio->fill($data);
         $negocio->save();
 

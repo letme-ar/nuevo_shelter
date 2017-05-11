@@ -122,12 +122,10 @@ class RegisterController extends Controller
         $repoNegocio = new RepoNegocio();
         $repoUsersXNegocio = new RepoUsersXNegocio();
         $repoSala = new RepoSala();
-        $repoSalasXnegocio = new RepoSalasXNegocio();
 
         $negocio = $repoNegocio->getModel()->firstOrCreate(['descripcion' => $nombre_negocio,'user_creador_id' => $user->id]);
         $repoUsersXNegocio->getModel()->firstOrCreate(['user_creador_id' => $user->id,'negocio_id' => $negocio->id]);
-        $sala = $repoSala->getModel()->firstOrCreate(['descripcion' => 'Sala 1','user_creador_id' => $user->id]);
-        $repoSalasXnegocio->getModel()->firstOrCreate(['negocio_id' => $negocio->id,'sala_id' => $sala->id]);
+        $repoSala->getModel()->firstOrCreate(['nombre' => 'Sala 1','descripcion' => 'Sala 1','user_creador_id' => $user->id,'principal' => 1,'negocio_id' => $negocio->id]);
     }
 
     /**

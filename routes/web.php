@@ -47,5 +47,10 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post("users/activar",array('as' => 'users.activar','uses'  => 'UsersController@activar'));
     Route::post("users/desactivar",array('as' => 'users.desactivar','uses'  => 'UsersController@desactivar'));
     Route::resource('users','UsersController');
+
+    Route::get('salas.getDataSala',['uses' => 'SalasController@getDataSala','as' => 'salas.getDataSala']);
+    Route::post("salas/eliminar",array('as' => 'salas.eliminar','uses'  => 'SalasController@eliminar'));
+    Route::get('salas/buscar',['uses' => 'SalasController@buscar','as' => 'salas.buscar']);
+    Route::resource('salas','SalasController');
 });
 
