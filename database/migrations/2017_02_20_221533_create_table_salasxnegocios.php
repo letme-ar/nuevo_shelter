@@ -17,6 +17,7 @@ class CreateTableSalasxnegocios extends Migration
             $table->increments('id');
             $table->integer('negocio_id')->unsigned();
             $table->integer('sala_id')->unsigned();
+            $table->integer('principal');
             $table->timestamps();
             $table->softDeletes();
         });

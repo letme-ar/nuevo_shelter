@@ -28,6 +28,7 @@
 
             $("input:text[name=telefono]").mask("00000000000000000000");
 
+            $('[data-toggle="tooltip"]').tooltip();
 
             $("#eliminar-1").click(function(){
                 var id = $("#id_seleccionado").val();
@@ -114,11 +115,11 @@
                     <td>Inactivo</td>
                 @endif
                 <td>
-                    <a title='Editar' href="{{route('users.index')}}/{{ $usuario->user_id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a>
+                    <a data-toggle="tooltip" data-placement="top" title='Editar' href="{{route('users.index')}}/{{ $usuario->user_id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a>
                     @if($usuario->deleted_at == null)
-                        <a title='Desactivar' onclick='desactivar("{{ $usuario->user_id }}","{{ $usuario->username }}")' ><i class='glyphicon glyphicon-remove' ></i></a>
+                        <a data-toggle="tooltip" data-placement="top" title='Desactivar' onclick='desactivar("{{ $usuario->user_id }}","{{ $usuario->username }}")' ><i class='glyphicon glyphicon-remove' ></i></a>
                     @else
-                        <a title='Activar' onclick='activar("{{ $usuario->user_id }}","{{ $usuario->username }}")' ><i class='glyphicon glyphicon-thumbs-up' ></i></a>
+                        <a data-toggle="tooltip" data-placement="top" title='Activar' onclick='activar("{{ $usuario->user_id }}","{{ $usuario->username }}")' ><i class='glyphicon glyphicon-thumbs-up' ></i></a>
                     @endif
                 </td>
             </tr>
