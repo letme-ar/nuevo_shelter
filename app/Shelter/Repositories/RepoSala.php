@@ -28,7 +28,6 @@ class RepoSala extends Repo {
 
         $sala = $this->getModel()->firstOrNew(['id' => $data['id']]);
 
-//        dd($data);
         $data = $this->setNegocioIdAndUserCreadorId($data);
         $data = $this->updatePrincipalProperty($data);
 
@@ -48,7 +47,7 @@ class RepoSala extends Repo {
     {
         if (isset($data['principal'])) {
             $data['principal'] = 1;
-            $this->setPrincipalZero();
+            $this->setPrincipalZero($data['id']);
             return $data;
         } else
             $data['principal'] = 0;
@@ -96,9 +95,12 @@ class RepoSala extends Repo {
 
     }
 
-    public function setPrincipalZero()
+    public function setPrincipalZero($id)
     {
-        $this->getModel()->where('negocio_id', auth()->user()->usersxnegocio->negocio_id)->update(['principal' => 0]);
+        $this->getModel()
+            ->where('id','<>',$id)
+            ->where('negocio_id', auth()->user()->usersxnegocio->negocio_id)
+            ->update(['principal' => 0]);
     }
 
 

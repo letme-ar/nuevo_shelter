@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>Agregar una sala</h1>
+    <h1>@{{ titulo }} una sala</h1>
 
 
     {!! Form::model(isset($sala) ? $sala:null,array('enctype' => 'multipart/form-data','id' => 'frmSala')) !!}
@@ -33,11 +33,19 @@
         </label>
     </div>
 
-    <ul class="row col-md-12">
-        <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4" v-for="foto in sala.salasxfotos">
-            <img class="img-responsive" src="../../@{{ foto.path_foto }}">
-        </li>
-    </ul>
+    <hr>
+    <div class="row" style="margin-top: 10px" v-if="salasxfotos.length > 0">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-info" style="min-height: 300px">
+                <div class="panel-heading">Fotos cargadas</div>
+                <div class="col-md-12 form-inline" style="margin-top: 10px">
+                    <ul class="bxslider">
+                        <li v-for="foto in salasxfotos"><img src="../../@{{ foto.path_foto }}" style="max-height: 300px" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="col-md-12 alert-danger" v-if="errors.length > 0" style="margin-top: 20px">
         <li v-for="error in errors" class="has-error">
@@ -45,14 +53,8 @@
         </li>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+
+
 
     <div class="col-md-12" style="margin-top: 20px">
         {!! Form::button("Guardar", ['type' => 'submit', 'class' => 'btn btn-primary pull-right', '@click.prevent' => 'create()']) !!}

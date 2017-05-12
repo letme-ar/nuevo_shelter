@@ -29,6 +29,6 @@ class CreateTableSalasxfotos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salasxnegocios');
+        Schema::dropIfExists('salasxfotos');
     }
 }

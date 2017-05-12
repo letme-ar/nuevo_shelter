@@ -1,6 +1,8 @@
 @section('scripts')
 
-    {!! Html::script('js/photo-gallery.js') !!}
+    {!! Html::script('js/jquery.bxslider.min.js') !!}
+
+    {!! Html::style('css/jquery.bxslider.min.css', array('media' => 'screen')) !!}
 
 
     <script>
@@ -12,12 +14,22 @@
                     id: '',
                     nombre: '',
                     descripcion: '',
-                    principal: 0,
-                    salasxfotos: []
+                    principal: 0
+
                 },
                 errors: [],
-                token: ''
+                token: '',
+                salasxfotos: [],
+                titulo: "{{ $titulo }}"
 
+            },
+            watch:{
+                salasxfotos:function(){
+                    $('.bxslider').bxSlider({
+                        mode: 'fade',
+                        captions: true
+                    });
+                }
             },
             methods:{
                 create: function(){
@@ -63,6 +75,7 @@
                         data: "sala_id={!! isset($sala_id) ? $sala_id : null !!}",
                         success: function (data) {
                             vm.sala = data;
+                            vm.salasxfotos = data.salasxfotos;
                             HoldOn.close();
                         }
                     });
@@ -73,21 +86,6 @@
         @if(isset($sala_id))
             vm.cargarDatos();
         @endif
-
-
-    </script>
-    <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36251023-1']);
-        _gaq.push(['_setDomainName', 'jqueryscript.net']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
 
     </script>
 

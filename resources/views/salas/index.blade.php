@@ -166,7 +166,6 @@
                     <a data-toggle="tooltip" data-placement="top"  title='Editar' href="{{route('salas.index')}}/@{{ registro.id }}/edit"><i class='glyphicon glyphicon-edit' ></i></a>
 
                     <a data-toggle="tooltip" data-placement="top" v-show="!registro.principal" title='Eliminar' style="cursor: pointer" @click='eliminar(registro.id,registro.nombre)' ><i class='glyphicon glyphicon-trash' ></i></a>
-                    <a data-toggle="tooltip" data-placement="top"   v-show="registro.deleted_at" title='Activar' style="cursor: pointer" @click='activar(registro.id,registro.dni)' ><i class='glyphicon glyphicon-thumbs-up' ></i></a>
                 </td>
             </tr>
             </tbody>
