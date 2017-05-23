@@ -89,6 +89,8 @@ class RepoSala extends Repo {
         if(isset($datos['descripcion']))
             $model = $model->where('descripcion','like','%'.$datos['apellido'].'%');
 
+        $model->where('negocio_id',auth()->user()->usersxnegocio->negocio_id);
+
         $model = $model->paginate(env('APP_CANT_PAGINATE',10));
 
         return $model;
