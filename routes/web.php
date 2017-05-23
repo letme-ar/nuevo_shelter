@@ -47,5 +47,12 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post("users/activar",array('as' => 'users.activar','uses'  => 'UsersController@activar'));
     Route::post("users/desactivar",array('as' => 'users.desactivar','uses'  => 'UsersController@desactivar'));
     Route::resource('users','UsersController');
+
+
+    Route::get('servicios/getDataServicio',['uses' => 'ServiciosController@getDataServicio','as' => 'servicios.getDataServicio']);
+    Route::post("servicios/eliminar",array('as' => 'servicios.eliminar','uses'  => 'ServiciosController@eliminar'));
+    Route::get('servicios/buscar',['uses' => 'ServiciosController@buscar','as' => 'servicios.buscar']);
+    Route::resource('servicios','ServiciosController');
+
 });
 

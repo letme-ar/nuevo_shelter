@@ -110,7 +110,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('grupos.index') }}">Grupos</a></li>
                         <li><a href="#">Productos</a></li>
-                        <li><a href="#">Servicios</a></li>
+                        <li><a href="{{ route('servicios.index') }}">Servicios</a></li>
                         <li><a href="#">Calendario</a></li>
                         <li><a href="#">Salas</a></li>
                         <li><a href="#">Reportes</a></li>
